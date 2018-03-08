@@ -41,22 +41,23 @@ void insertAtPos(struct node **head,int value,int position){
 			newnode=new node;
 			newnode->data=value;
 			temp=*head;
-			int i=1;
-			while(temp->next!=NULL||i!=position-1){
-				i++;
+			int i=0;
+			while(temp->next!=NULL&&i!=position-2){
+				
 				temp=temp->next;
+				i++;
 			}
 			if(temp->next==NULL){
 				cout<<"Position doesnot exist";
 				return;
 			}
 			
-				newnode->prev=temp->next->prev;
+				newnode->prev=temp;
 			
-				newnode->next=temp->prev->next;	
-			
-			temp->prev->next=newnode;
-			temp->next->prev=newnode;
+				newnode->next=temp->next;	
+			if(temp->next)
+				temp->next->prev=newnode;
+			temp->next=newnode;
 	}
 }
 void print(struct node **head){
@@ -83,13 +84,13 @@ int main(int argc, char *argv[]) {
 		insertAtEnd(&head,data);
 		cin>>data;
 	}
+	print(&head);
 	cout<<"Enter the data you want to in the ll at the any position or enter -1 to exit";
 	cin>>data;
-	cin>>pos;
 	while(data!=-1){
+		cin>>pos;
 		insertAtPos(&head,data,pos);
 		cin>>data;
-		cin>>pos;
 	}		
 	print(&head);	
 }
